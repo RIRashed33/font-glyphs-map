@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>font</title>
+    <script src="https://cdn.jsdelivr.net/npm/opentype.js@latest/dist/opentype.min.js"></script>
+</head>
+<body>
+    <h1>Loading.....</h1>
+
+    <script>
+        const fontUrl = "mignotBASIC-1.woff";
+    
+		var woffFile = font_files_file[0].child_file;
+			opentype.load(woffFile, function (err, font) {
+				if (err) {
+					console.error("Error loading font:", err);
+					return;
+				}
+				
+				var basicLatin = {};
+				var latin1Supplement = {};
+				var latinExtendedA = {};
+				var latinExtendedB = {};
+				var latinExtendedAdditional = {};
+				var generalPunctuation = {};
+				var superscriptsSubscripts = {};
+				var currencySymbols = {};
+				var letterlikeSymbols = {};
+				var numberForms = {};
+				var arrows = {};
+				var mathematicalOperators = {};
+				var miscellaneousTechnical = {};
+				var enclosedAlphanumerics = {};
+				var geometricShapes = {};
+				var miscellaneousSymbols = {};
+				var dingbats = {};
+				var cjkSymbolsPunctuations = {};
+				var miscellaneousSymbolsPicgraphs = {};
+				
+				for (var i = 0; i < font.glyphs.length; i++) {
+					var glyph = font.glyphs.get(i);
+					if (glyph.unicode) {
+						switch(true){
+							case glyph.unicode > 32 && glyph.unicode < 127 :
+								basicLatin[glyph.unicode] = glyph.name;
+								break;
+							case glyph.unicode > 160 && glyph.unicode < 256 :
+								latin1Supplement[glyph.unicode] = glyph.name;
+								break;
+							case glyph.unicode > 255 && glyph.unicode < 383 :
+								latinExtendedA[glyph.unicode] = glyph.name;
+								break;
+							case glyph.unicode > 383 && glyph.unicode < 592 :
+								latinExtendedB[glyph.unicode] = glyph.name;
+								break;
+							case glyph.unicode > 7679 && glyph.unicode < 7936 :
+								latinExtendedAdditional[glyph.unicode] = glyph.name;
+								break;
+							case glyph.unicode > 8207 && glyph.unicode < 8304 :
+								generalPunctuation[glyph.unicode] = glyph.name;
+								break;
+							case glyph.unicode > 8303 && glyph.unicode < 8349 :
+								superscriptsSubscripts[glyph.unicode] = glyph.name;
+								break;
+							case glyph.unicode > 8351 && glyph.unicode < 8378 :
+								currencySymbols[glyph.unicode] = glyph.name;
+								break;
+							case glyph.unicode > 8447 && glyph.unicode < 8528 :
+								letterlikeSymbols[glyph.unicode] = glyph.name;
+								break;
+							case glyph.unicode > 8527 && glyph.unicode < 8586 :
+								numberForms[glyph.unicode] = glyph.name;
+								break;
+							case glyph.unicode > 8591 && glyph.unicode < 8704 :
+								arrows[glyph.unicode] = glyph.name;
+								break;
+							case glyph.unicode > 8703 && glyph.unicode < 8960 :
+								mathematicalOperators[glyph.unicode] = glyph.name;
+								break;
+							case glyph.unicode > 8959 && glyph.unicode < 9204 :
+								miscellaneousTechnical[glyph.unicode] = glyph.name;
+								break;
+							case glyph.unicode > 9311 && glyph.unicode < 9472 :
+								enclosedAlphanumerics[glyph.unicode] = glyph.name;
+								break;
+							case glyph.unicode > 9631 && glyph.unicode < 9728 :
+								geometricShapes[glyph.unicode] = glyph.name;
+								break;
+							case glyph.unicode > 9727 && glyph.unicode < 9984 :
+								miscellaneousSymbols[glyph.unicode] = glyph.name;
+								break;
+							case glyph.unicode > 9984 && glyph.unicode < 10176 :
+								dingbats[glyph.unicode] = glyph.name;
+								break;
+							case glyph.unicode > 12287 && glyph.unicode < 12352 :
+								cjkSymbolsPunctuations[glyph.unicode] = glyph.name;
+								break;
+							case glyph.unicode > 127743 && glyph.unicode < 128512 :
+								miscellaneousSymbolsPicgraphs[glyph.unicode] = glyph.name;
+						}
+					}
+				}
+				
+				console.log(basicLatin, latin1Supplement, latinExtendedA, latinExtendedB, latinExtendedAdditional, generalPunctuation, superscriptsSubscripts, currencySymbols, letterlikeSymbols);
+				
+			});
+      </script>
+</body>
+</html>
