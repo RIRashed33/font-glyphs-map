@@ -13,99 +13,233 @@
         const fontUrl = "mignotBASIC-1.woff";
     
 		var woffFile = font_files_file[0].child_file;
-			opentype.load(woffFile, function (err, font) {
-				if (err) {
-					console.error("Error loading font:", err);
-					return;
-				}
+		opentype.load(woffFile, function (err, font) {
+			if (err) {
+				console.error("Error loading font:", err);
+				return;
+			}
 				
-				var basicLatin = {};
-				var latin1Supplement = {};
-				var latinExtendedA = {};
-				var latinExtendedB = {};
-				var latinExtendedAdditional = {};
-				var generalPunctuation = {};
-				var superscriptsSubscripts = {};
-				var currencySymbols = {};
-				var letterlikeSymbols = {};
-				var numberForms = {};
-				var arrows = {};
-				var mathematicalOperators = {};
-				var miscellaneousTechnical = {};
-				var enclosedAlphanumerics = {};
-				var geometricShapes = {};
-				var miscellaneousSymbols = {};
-				var dingbats = {};
-				var cjkSymbolsPunctuations = {};
-				var miscellaneousSymbolsPicgraphs = {};
-				
-				for (var i = 0; i < font.glyphs.length; i++) {
-					var glyph = font.glyphs.get(i);
-					if (glyph.unicode) {
-						switch(true){
-							case glyph.unicode > 32 && glyph.unicode < 127 :
-								basicLatin[glyph.unicode] = glyph.name;
-								break;
-							case glyph.unicode > 160 && glyph.unicode < 256 :
-								latin1Supplement[glyph.unicode] = glyph.name;
-								break;
-							case glyph.unicode > 255 && glyph.unicode < 383 :
-								latinExtendedA[glyph.unicode] = glyph.name;
-								break;
-							case glyph.unicode > 383 && glyph.unicode < 592 :
-								latinExtendedB[glyph.unicode] = glyph.name;
-								break;
-							case glyph.unicode > 7679 && glyph.unicode < 7936 :
-								latinExtendedAdditional[glyph.unicode] = glyph.name;
-								break;
-							case glyph.unicode > 8207 && glyph.unicode < 8304 :
-								generalPunctuation[glyph.unicode] = glyph.name;
-								break;
-							case glyph.unicode > 8303 && glyph.unicode < 8349 :
-								superscriptsSubscripts[glyph.unicode] = glyph.name;
-								break;
-							case glyph.unicode > 8351 && glyph.unicode < 8378 :
-								currencySymbols[glyph.unicode] = glyph.name;
-								break;
-							case glyph.unicode > 8447 && glyph.unicode < 8528 :
-								letterlikeSymbols[glyph.unicode] = glyph.name;
-								break;
-							case glyph.unicode > 8527 && glyph.unicode < 8586 :
-								numberForms[glyph.unicode] = glyph.name;
-								break;
-							case glyph.unicode > 8591 && glyph.unicode < 8704 :
-								arrows[glyph.unicode] = glyph.name;
-								break;
-							case glyph.unicode > 8703 && glyph.unicode < 8960 :
-								mathematicalOperators[glyph.unicode] = glyph.name;
-								break;
-							case glyph.unicode > 8959 && glyph.unicode < 9204 :
-								miscellaneousTechnical[glyph.unicode] = glyph.name;
-								break;
-							case glyph.unicode > 9311 && glyph.unicode < 9472 :
-								enclosedAlphanumerics[glyph.unicode] = glyph.name;
-								break;
-							case glyph.unicode > 9631 && glyph.unicode < 9728 :
-								geometricShapes[glyph.unicode] = glyph.name;
-								break;
-							case glyph.unicode > 9727 && glyph.unicode < 9984 :
-								miscellaneousSymbols[glyph.unicode] = glyph.name;
-								break;
-							case glyph.unicode > 9984 && glyph.unicode < 10176 :
-								dingbats[glyph.unicode] = glyph.name;
-								break;
-							case glyph.unicode > 12287 && glyph.unicode < 12352 :
-								cjkSymbolsPunctuations[glyph.unicode] = glyph.name;
-								break;
-							case glyph.unicode > 127743 && glyph.unicode < 128512 :
-								miscellaneousSymbolsPicgraphs[glyph.unicode] = glyph.name;
-						}
+			var glyphsData = {};
+			for (var i = 0; i < font.glyphs.length; i++) {
+				var glyph = font.glyphs.get(i);
+				if (glyph.unicode) {
+					switch(true){
+						case glyph.unicode > 32 && glyph.unicode < 127 :
+							if(glyphsData.basic_latin){
+								glyphsData.basic_latin.glyphs[glyph.unicode] = glyph.name;
+							}else{
+								glyphsData.basic_latin = {
+									title : "Basic Latin",
+									glyphs : {}
+								}
+								glyphsData.basic_latin.glyphs[glyph.unicode] = glyph.name;
+							}
+							break;
+						case glyph.unicode > 160 && glyph.unicode < 256 :
+							if(glyphsData.latin_1_supplement){
+								glyphsData.latin_1_supplement.glyphs[glyph.unicode] = glyph.name;
+							}else{
+								glyphsData.latin_1_supplement = {
+									title : "Latin-1 Supplement",
+									glyphs : {}
+								}
+								glyphsData.latin_1_supplement.glyphs[glyph.unicode] = glyph.name;
+							}
+							break;
+						case glyph.unicode > 255 && glyph.unicode < 383 :
+							if(glyphsData.latin_extended_A){
+								glyphsData.latin_extended_A.glyphs[glyph.unicode] = glyph.name;
+							}else{
+								glyphsData.latin_extended_A = {
+									title : "Latin Extended-A",
+									glyphs : {}
+								}
+								glyphsData.latin_extended_A.glyphs[glyph.unicode] = glyph.name;
+							}
+							break;
+						case glyph.unicode > 383 && glyph.unicode < 592 :
+							if(glyphsData.latin_extended_B){
+								glyphsData.latin_extended_B.glyphs[glyph.unicode] = glyph.name;
+							}else{
+								glyphsData.latin_extended_B = {
+									title : "Latin Extended-B",
+									glyphs : {}
+								}
+								glyphsData.latin_extended_B.glyphs[glyph.unicode] = glyph.name;
+							}
+							break;
+						case glyph.unicode > 7679 && glyph.unicode < 7936 :
+							if(glyphsData.latin_extended_additional){
+								glyphsData.latin_extended_additional.glyphs[glyph.unicode] = glyph.name;
+							}else{
+								glyphsData.latin_extended_additional = {
+									title : "Latin Extended Additional",
+									glyphs : {}
+								}
+								glyphsData.latin_extended_additional.glyphs[glyph.unicode] = glyph.name;
+							}
+							break;
+						case glyph.unicode > 8207 && glyph.unicode < 8304 :
+							if(glyphsData.general_punctuation){
+								glyphsData.general_punctuation.glyphs[glyph.unicode] = glyph.name;
+							}else{
+								glyphsData.general_punctuation = {
+									title : "General Punctuation",
+									glyphs : {}
+								}
+								glyphsData.general_punctuation.glyphs[glyph.unicode] = glyph.name;
+							}
+							break;
+						case glyph.unicode > 8303 && glyph.unicode < 8349 :
+							if(glyphsData.superscripts_subscripts){
+								glyphsData.superscripts_subscripts.glyphs[glyph.unicode] = glyph.name;
+							}else{
+								glyphsData.superscripts_subscripts = {
+									title : "Superscripts and Subscripts",
+									glyphs : {}
+								}
+								glyphsData.superscripts_subscripts.glyphs[glyph.unicode] = glyph.name;
+							}
+							break;
+						case glyph.unicode > 8351 && glyph.unicode < 8378 :
+							if(glyphsData.currency_symbols){
+								glyphsData.currency_symbols.glyphs[glyph.unicode] = glyph.name;
+							}else{
+								glyphsData.currency_symbols = {
+									title : "Currency Symbols",
+									glyphs : {}
+								}
+								glyphsData.currency_symbols.glyphs[glyph.unicode] = glyph.name;
+							}
+							break;
+						case glyph.unicode > 8447 && glyph.unicode < 8528 :
+							if(glyphsData.letterlike_symbols){
+								glyphsData.letterlike_symbols.glyphs[glyph.unicode] = glyph.name;
+							}else{
+								glyphsData.letterlike_symbols = {
+									title : "Letterlike Symbols",
+									glyphs : {}
+								}
+								glyphsData.letterlike_symbols.glyphs[glyph.unicode] = glyph.name;
+							}
+							break;
+						case glyph.unicode > 8527 && glyph.unicode < 8586 :
+							if(glyphsData.number_forms){
+								glyphsData.number_forms.glyphs[glyph.unicode] = glyph.name;
+							}else{
+								glyphsData.number_forms = {
+									title : "Number Forms",
+									glyphs : {}
+								}
+								glyphsData.number_forms.glyphs[glyph.unicode] = glyph.name;
+							}
+							break;
+						case glyph.unicode > 8591 && glyph.unicode < 8704 :
+							if(glyphsData.arrows){
+								glyphsData.arrows.glyphs[glyph.unicode] = glyph.name;
+							}else{
+								glyphsData.arrows = {
+									title : "Arrows",
+									glyphs : {}
+								}
+								glyphsData.arrows.glyphs[glyph.unicode] = glyph.name;
+							}
+							break;
+						case glyph.unicode > 8703 && glyph.unicode < 8960 :
+							if(glyphsData.mathematical_operators){
+								glyphsData.mathematical_operators.glyphs[glyph.unicode] = glyph.name;
+							}else{
+								glyphsData.mathematical_operators = {
+									title : "Mathematical Operators",
+									glyphs : {}
+								}
+								glyphsData.mathematical_operators.glyphs[glyph.unicode] = glyph.name;
+							}
+							break;
+						case glyph.unicode > 8959 && glyph.unicode < 9204 :
+							if(glyphsData.miscellaneous_technical){
+								glyphsData.miscellaneous_technical.glyphs[glyph.unicode] = glyph.name;
+							}else{
+								glyphsData.miscellaneous_technical = {
+									title : "Miscellaneous Technical",
+									glyphs : {}
+								}
+								glyphsData.miscellaneous_technical.glyphs[glyph.unicode] = glyph.name;
+							}
+							break;
+						case glyph.unicode > 9311 && glyph.unicode < 9472 :
+							if(glyphsData.enclosed_alphanumerics){
+								glyphsData.enclosed_alphanumerics.glyphs[glyph.unicode] = glyph.name;
+							}else{
+								glyphsData.enclosed_alphanumerics = {
+									title : "Enclosed Alphanumerics",
+									glyphs : {}
+								}
+								glyphsData.enclosed_alphanumerics.glyphs[glyph.unicode] = glyph.name;
+							}
+							break;
+						case glyph.unicode > 9631 && glyph.unicode < 9728 :
+							if(glyphsData.geometric_shapes){
+								glyphsData.geometric_shapes.glyphs[glyph.unicode] = glyph.name;
+							}else{
+								glyphsData.geometric_shapes = {
+									title : "Geometric Shapes",
+									glyphs : {}
+								}
+								glyphsData.geometric_shapes.glyphs[glyph.unicode] = glyph.name;
+							}
+							break;
+						case glyph.unicode > 9727 && glyph.unicode < 9984 :
+							if(glyphsData.miscellaneous_symbols){
+								glyphsData.miscellaneous_symbols.glyphs[glyph.unicode] = glyph.name;
+							}else{
+								glyphsData.miscellaneous_symbols = {
+									title : "Miscellaneous Symbols",
+									glyphs : {}
+								}
+								glyphsData.miscellaneous_symbols.glyphs[glyph.unicode] = glyph.name;
+							}
+							break;
+						case glyph.unicode > 9984 && glyph.unicode < 10176 :
+							if(glyphsData.dingbats){
+								glyphsData.dingbats.glyphs[glyph.unicode] = glyph.name;
+							}else{
+								glyphsData.dingbats = {
+									title : "Dingbats",
+									glyphs : {}
+								}
+								glyphsData.dingbats.glyphs[glyph.unicode] = glyph.name;
+							}
+							break;
+						case glyph.unicode > 12287 && glyph.unicode < 12352 :
+							if(glyphsData.cjk_symbols_punctuations){
+								glyphsData.cjk_symbols_punctuations.glyphs[glyph.unicode] = glyph.name;
+							}else{
+								glyphsData.cjk_symbols_punctuations = {
+									title : "CJK Symbols and Punctuation",
+									glyphs : {}
+								}
+								glyphsData.cjk_symbols_punctuations.glyphs[glyph.unicode] = glyph.name;
+							}
+							break;
+						case glyph.unicode > 127743 && glyph.unicode < 128512 :
+							if(glyphsData.miscellaneous_symbols_pictographs){
+								glyphsData.miscellaneous_symbols_pictographs.glyphs[glyph.unicode] = glyph.name;
+							}else{
+								glyphsData.miscellaneous_symbols_pictographs = {
+									title : "Miscellaneous Symbols and Pictographs",
+									glyphs : {}
+								}
+								glyphsData.miscellaneous_symbols_pictographs.glyphs[glyph.unicode] = glyph.name;
+							}
 					}
 				}
+			}
+			
+			console.log(glyphsData);
 				
-				console.log(basicLatin, latin1Supplement, latinExtendedA, latinExtendedB, latinExtendedAdditional, generalPunctuation, superscriptsSubscripts, currencySymbols, letterlikeSymbols);
-				
-			});
+
+		});
       </script>
 </body>
 </html>
